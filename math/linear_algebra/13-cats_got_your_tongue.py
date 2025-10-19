@@ -11,7 +11,7 @@ def np_cat(mat1, mat2, axis=0):
     Args:
         mat1: first numpy array
         mat2: second numpy array
-        axis: axis along which to concatenate (default 0)    
+        axis: axis along which to concatenate (default 0)
     Returns:
         numpy.ndarray: concatenated matrix
     """
