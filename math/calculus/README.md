@@ -9,3 +9,5 @@ ln(aᵇ) = b·ln(a)
 
 Kujdes rregulli :Rregulli i zinxhirit:
 d(f(g(x)))/dx = f'(g(x)) · g'(x)
+
+# 12  Integral i thjeshtë eksponencial
