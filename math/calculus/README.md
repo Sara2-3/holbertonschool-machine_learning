@@ -11,3 +11,7 @@ Kujdes rregulli :Rregulli i zinxhirit:
 d(f(g(x)))/dx = f'(g(x)) · g'(x)
 
 # 12  Integral i thjeshtë eksponencial
+∫e^ax dx= 1/a  e ^ax +C
+
+# 13 Teorema Themelore e Kalkulusit:
+∫ a b  f(x)dx=F(b)−F(a)
