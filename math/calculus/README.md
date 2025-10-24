@@ -22,3 +22,15 @@ d(f(g(x)))/dx = f'(g(x)) · g'(x)
 
 # 13 Teorema Themelore e Kalkulusit:
 ∫ a b  f(x)dx=F(b)−F(a)
+
+# 9
+isinstance në Python është një funksion i integruar (built-in) që përdoret për të kontrolluar llojin (tipin) e të dhënave të një objekti.
+
+def summation_i_squared(n):
+  if not isinstance(n, int): verton nese n eshte numer i plote
+    return None
+  if n< 0:
+    return None
+  
+  sum_value=n * ( n+1) * (2*n+ 1)//6
+  return sum_value
