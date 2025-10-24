@@ -4,6 +4,13 @@
 Derivati i (A·B) = (A)·(derivati i B) + (B)·(derivati i A)
 ln(x)=1/x
 
+
+# 7. Derivati i pjeseshem
+Derivati i pjeshem ,mat se si ndryshon nje funksion me shume variabla kur ndryshon vetem nja nga ato variabla, ndersa te gjitha variablat e tjere mbahen konstant.
+
+rregulli i zinxhirit
+
+
 # 6 Vetite e logaritmave
 ln(aᵇ) = b·ln(a)
 
