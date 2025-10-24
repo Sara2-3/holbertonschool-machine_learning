@@ -1,21 +1,28 @@
 #!/usr/bin/env python3
 """
-Module that calculates the summation of i squared up to n.
+Module for calculating the sum of squares of integers from 1 to n.
 """
 
 
 def summation_i_squared(n):
     """
-    Calculates the sum of squares from 1 to n.
+    Calculate the sum of squares of integers from 1 to n.
+
+    Uses the mathematical formula: n(n+1)(2n+1)/6
 
     Args:
-        n (int): the stopping condition.
+        n (int): The stopping condition (upper limit)
 
     Returns:
-        int: the sum of squares (1² + 2² + ... + n²),
-            or None if n is not a valid positive integer.
+        int: The integer value of the sum 1² + 2² + ... + n²
+        None: If n is not a valid number
     """
     if not isinstance(n, int) or n < 1:
         return None
-    # formula for sum of squares: n(n + 1)(2n + 1) / 6
-    return int(n * (n + 1) * (2 * n + 1) / 6)
+
+    return n * (n + 1) * (2 * n + 1) // 6
+
+
+if __name__ == "__main__":
+    n = 5
+    print(summation_i_squared(n))
