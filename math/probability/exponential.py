@@ -3,6 +3,8 @@
 
 
 class Exponential:
+    """Represents a Exponential distribution"""
+
     def __init__(self, data=None, lambtha=1.):
         """Initialize Poisson distribution with data or lambtha"""
         if data is None:
