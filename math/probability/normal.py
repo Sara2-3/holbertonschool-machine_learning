@@ -19,7 +19,7 @@ class Normal:
             n = len(data)
             self.mean = float(sum(data) / n)
 
-            variance = sum((x - self.mean) ** 2 for x in data) / (n - 1)
+            variance = sum((x - self.mean) ** 2 for x in data) / n
             self.stddev = float(variance ** 0.5)
 
     def z_score(self, x):
