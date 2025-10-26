@@ -2,9 +2,6 @@
 """Exponential distribution module"""
 
 
-import math
-
-
 class Exponential:
     """Represents an Exponential distribution"""
 
@@ -27,10 +24,10 @@ class Exponential:
         """Calculates the PDF for a given time period x"""
         if x < 0:
             return 0
-        return self.lambtha * math.exp(-self.lambtha * x)
+        return self.lambtha * 2.7182818285 (-self.lambtha * x)
 
     def cdf(self, x):
         """Calculates the CDF for a given time period x"""
         if x < 0:
             return 0
-        return 1 - math.exp(-self.lambtha * x)
+        return 1 - 2.7182818285 (-self.lambtha * x)
