@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""Poisson distribution module
-"""
+"""Poisson distribution module"""
 
 
 class Poisson:
@@ -18,3 +17,24 @@ class Poisson:
             if len(data) < 2:
                 raise ValueError("data must contain multiple values")
             self.lambtha = float(sum(data) / len(data))
+
+    def pmf(self, k):
+        """Calculates the value of the PMF for a given number of successes"""
+        k = int(k)
+        if k < 0:
+            return 0
+        fact = 1
+        for i in range(1, k + 1):
+            fact *= i
+        e = 2.7182818285
+        return (self.lambtha ** k * e ** (-self.lambtha)) / fact
+
+    def cdf(self, k):
+        """Calculates the value of the CDF for a given number of successes"""
+        k = int(k)
+        if k < 0:
+            return 0
+        total = 0
+        for i in range(0, k + 1):
+            total += self.pmf(i)
+        return total
