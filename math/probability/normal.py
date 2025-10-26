@@ -16,15 +16,10 @@ class Normal:
                 raise TypeError("data must be a list")
             if len(data) < 2:
                 raise ValueError("data must contain multiple values")
+            n = len(data)
+            self.mean = float(sum(data) / n)
 
-            self.mean = float(sum(data) / len(data))
-
-            sum_sq_diff = 0
-            for x in data:
-                diff = x - self.mean
-                sum_sq_diff += diff ** 2
-
-            variance = sum_sq_diff / (len(data) - 1)
+            variance = sum((x - self.mean) ** 2 for x in data) / (n - 1)
             self.stddev = float(variance ** 0.5)
 
     def z_score(self, x):
