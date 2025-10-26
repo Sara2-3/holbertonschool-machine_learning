@@ -39,21 +39,22 @@ class Normal:
 
     def cdf(self, x):
         """Calculates the value of the CDF for a given x-value"""
-        z = (x - self.mean) / (self.stddev * (2 ** 0.5))
-        if z < 0:
-            return (1 - self._erf(-z)) / 2
-        return (1 + self._erf(z)) / 2
+        z = (x - self.mean) / self.stddev
+        return 0.5 * (1 + self._erf(z / (2 ** 0.5)))
 
     def _erf(self, x):
         """Error function approximation"""
+        if x == 0:
+            return 0
         a1 = 0.254829592
         a2 = -0.284496736
         a3 = 1.421413741
         a4 = -1.453152027
         a5 = 1.061405429
         p = 0.3275911
-
+        sign = 1 if x >= 0 else -1
+        x = abs(x)
         t = 1.0 / (1.0 + p * x)
-        erf_val = 1.0 - (((((a5 * t + a4) * t + a3) * t + a2) * t + a1) * 
-                        t * (2.718281828459045 ** (-x * x)))
-        return erf_val
+        term1 = ((((a5 * t + a4) * t) + a3) * t + a2) * t + a1
+        y = 1.0 - term1 * t * (2.718281828459045 ** (-x * x))
+        return sign * y
