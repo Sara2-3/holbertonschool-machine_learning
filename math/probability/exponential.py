@@ -2,8 +2,11 @@
 """Exponential distribution module"""
 
 
+import math
+
+
 class Exponential:
-    """Represents a Exponential distribution"""
+    """Represents an Exponential distribution"""
 
     def __init__(self, data=None, lambtha=1.):
         """Initialize Exponential distribution with data or lambtha"""
@@ -19,3 +22,15 @@ class Exponential:
 
             x = sum(data) / len(data)
             self.lambtha = float(1 / x)
+
+    def pdf(self, x):
+        """Calculates the PDF for a given time period x"""
+        if x < 0:
+            return 0
+        return self.lambtha * math.exp(-self.lambtha * x)
+
+    def cdf(self, x):
+        """Calculates the CDF for a given time period x"""
+        if x < 0:
+            return 0
+        return 1 - math.exp(-self.lambtha * x)
