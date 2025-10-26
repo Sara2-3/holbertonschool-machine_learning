@@ -18,7 +18,6 @@ class Normal:
                 raise ValueError("data must contain multiple values")
             n = len(data)
             self.mean = float(sum(data) / n)
-
             variance = sum((x - self.mean) ** 2 for x in data) / n
             self.stddev = float(variance ** 0.5)
 
@@ -37,3 +36,23 @@ class Normal:
         coefficient = 1 / (self.stddev * (2 * pi) ** 0.5)
         exponent = -((x - self.mean) ** 2) / (2 * self.stddev ** 2)
         return coefficient * (e ** exponent)
+
+    def cdf(self, x):
+        """Calculates the value of the CDF for a given x-value"""
+        p = 0.3275911
+        a1 = 0.254829592
+        a2 = -0.284496736
+        a3 = 1.421413741
+        a4 = -1.453152027
+        a5 = 1.061405429
+
+        z = (x - self.mean) / (self.stddev * 1.41421356237)
+        sign = 1
+        if z < 0:
+            sign = -1
+        z = abs(z)
+
+        t = 1 / (1 + p * z)
+        erf_approx = 1 - (((((a5 * t + a4) * t + a3) * t + a2) * t
+                         + a1) * t * (2.718281828459045 ** (-z * z)))       
+        return 0.5 * (1 + sign * erf_approx)
