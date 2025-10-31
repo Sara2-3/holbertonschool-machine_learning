@@ -1,0 +1,25 @@
+#!/usr/bin/env python3
+"""
+Module for creating pandas DataFrames from numpy arrays
+"""
+
+import pandas as pd
+import string
+
+
+def from_numpy(array):
+    """
+    Creates a pd.DataFrame from a np.ndarray
+
+    Args:
+        array (np.ndarray): The numpy array from which to create the DataFrame
+
+    Returns:
+        pd.DataFrame: Newly created DataFrame with columns A, B, etc.
+    """
+    num_cols = array.shape[1]
+    columns = [string.ascii_uppercase[i] for i in range(num_cols)]
+
+    df = pd.DataFrame(array, columns=columns)
+
+    return df
