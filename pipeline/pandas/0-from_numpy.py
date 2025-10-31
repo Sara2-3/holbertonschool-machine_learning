@@ -17,10 +17,6 @@ def from_numpy(array):
         pd.DataFrame: Newly created DataFrame with columns A, B, etc.
     """
     num_cols = array.shape[1]
-    
-    # Create column labels without using string module
-    columns = [chr(65 + i) for i in range(num_cols)]  # 65 is 'A' in ASCII
-    
+    columns = [chr(65 + i) for i in range(num_cols)]
     df = pd.DataFrame(array, columns=columns)
-    
     return df
