@@ -4,7 +4,6 @@ Module for creating pandas DataFrames from numpy arrays
 """
 
 import pandas as pd
-import string
 
 
 def from_numpy(array):
@@ -18,8 +17,10 @@ def from_numpy(array):
         pd.DataFrame: Newly created DataFrame with columns A, B, etc.
     """
     num_cols = array.shape[1]
-    columns = [string.ascii_uppercase[i] for i in range(num_cols)]
-
+    
+    # Create column labels without using string module
+    columns = [chr(65 + i) for i in range(num_cols)]  # 65 is 'A' in ASCII
+    
     df = pd.DataFrame(array, columns=columns)
-
+    
     return df
