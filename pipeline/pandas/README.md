@@ -7,3 +7,6 @@ Notes for Tasks
 # 5.Task
 [::60] slicing step start from 0 move with 60,
 .iat[] this is betten than  .iloc[], More efficient for individual value 
+# 6.Task
+return df.sort_values('Timestamp', ascending=False).T
+.T make transpose
