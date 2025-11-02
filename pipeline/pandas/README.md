@@ -1,17 +1,9 @@
 # Pandas
 
 Notes for Tasks
+# 4.Task
+.values është një atribut i pandas DataFrame që kthen automatikisht numpy array pa nevojë për import të numpy
 
-# Task 4
-Short Version
-#!/usr/bin/env python3
-
-import pandas as pd
-import numpy as np
-
-
-def array(df):
-    """
-    Selects last 10 rows of High and Close columns and converts to numpy array
-    """
-    return df[['High', 'Close']].tail(10).to_numpy()
+# 5.Task
+[::60] slicing step start from 0 move with 60,
+.iat[] this is betten than  .iloc[], More efficient for individual value 
