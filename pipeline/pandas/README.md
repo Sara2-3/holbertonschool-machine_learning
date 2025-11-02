@@ -10,3 +10,7 @@ Notes for Tasks
 # 6.Task
 return df.sort_values('Timestamp', ascending=False).T
 .T make transpose
+# 7.Task
+subset=['Close'] specifikon që të hiqen vetëm rreshtat ku kolona 'Close' ka NaN
+Mban të gjitha kolonat e tjera
+Kthen të gjithë DataFrame-in
