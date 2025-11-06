@@ -1,4 +1,8 @@
 #!/usr/bin/env python3
+"""
+Module for Line Graph
+"""
+
 import numpy as np
 import matplotlib.pyplot as plt
 
