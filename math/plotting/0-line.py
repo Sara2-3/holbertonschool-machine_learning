@@ -1,4 +1,7 @@
 #!/usr/bin/env python3
+"""
+Module for Scatter Plot
+"""
 import numpy as np
 import matplotlib.pyplot as plt
 
