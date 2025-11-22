@@ -8,6 +8,7 @@ import requests
 import sys
 import time
 
+
 def user_location():
     """
     Retrieves the location of a GitHub user specified by the API URL
@@ -61,6 +62,7 @@ def user_location():
     except requests.exceptions.RequestException:
         print("Not found")
         sys.exit(1)
+
 
 if __name__ == '__main__':
     user_location()
