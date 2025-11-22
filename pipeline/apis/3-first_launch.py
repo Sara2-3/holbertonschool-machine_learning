@@ -6,7 +6,7 @@ A script that displays the first launch.
 import requests
 
 if __name__ == "__main__":
-    launches_url = "https://api.spacexdata.com/v4/launches/upcoming"
+    launches_url = "https://api.spacexdata.com/v4/launches"
 
     launches = requests.get(launches_url).json()
 
