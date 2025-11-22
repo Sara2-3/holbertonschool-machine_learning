@@ -19,15 +19,13 @@ if __name__ == "__main__":
         if location:
             print(location)
         else:
-            print("No location")
+            print("Not found")
 
     elif response.status_code == 404:
         print("Not found")
 
     elif response.status_code == 403:
-        reset_time = int(response.headers.get("X-Ratelimit-Reset", 0))
+        reset_time = int(response.headers.get("X-RateLimit-Reset", 0))
         now = int(time.time())
-        minutes = (reset_time - now) // 60
-        if minutes < 0:
-            minutes = 0
+        minutes = (reset_time - now + 59) // 60  # Round up
         print(f"Reset in {minutes} min")
