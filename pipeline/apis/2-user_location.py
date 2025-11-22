@@ -1,14 +1,19 @@
 #!/usr/bin/env python3
 """
-Një skript Python që printon lokacionin e një përdoruesi specifik në GitHub
-duke përdorur GitHub API.
-Trajton status kode 404 (Not found) dhe 403 (Rate limit exceeded).
+A script that prints the location of a specific user on GitHub
+using the GitHub API. It handles status codes 404 (Not found) and
+403 (Rate limit exceeded) by calculating the reset time.
 """
 import requests
 import sys
 import time
 
 def user_location():
+    """
+    Retrieves the location of a GitHub user specified by the API URL
+    provided as a command-line argument.
+    Prints the location, 'Not found', or 'Reset in X min'.
+    """
     if len(sys.argv) < 2:
         sys.exit(1)
 
@@ -53,7 +58,7 @@ def user_location():
             print("Not found")
             return
 
-    except requests.exceptions.RequestException as e:
+    except requests.exceptions.RequestException:
         print("Not found")
         sys.exit(1)
 
