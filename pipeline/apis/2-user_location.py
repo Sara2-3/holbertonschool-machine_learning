@@ -45,19 +45,14 @@ def user_location():
                 print("Not found")
                 return
 
-        elif status_code == 200:
+        if status_code == 200:
             user_data = response.json()
             location = user_data.get('location')
-
-            if location is None or location.strip() == "":
-                print("Not found")
-            else:
-                print(location)
+            print(location)
             return
 
-        else:
-            print("Not found")
-            return
+        print("Not found")
+        return
 
     except requests.exceptions.RequestException:
         print("Not found")
