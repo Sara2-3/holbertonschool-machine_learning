@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """
-Module that trains a Keras model with optional validation data and early stopping.
+Module that trains a Keras model with optional validation data
+and early stopping.
 """
 
 import tensorflow.keras as K
