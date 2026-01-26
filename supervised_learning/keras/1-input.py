@@ -1,39 +1,37 @@
 #!/usr/bin/env python3
-import tensorflow as tf
-from tensorflow import keras
+import tensorflow.keras as K
 
 def build_model(nx, layers, activations, lambtha, keep_prob):
     """
     Builds a neural network model using Keras functional API.
 
     Parameters:
-    - nx: number of input features
-    - layers: list with number of nodes in each layer
-    - activations: list with activation functions for each layer
-    - lambtha: L2 regularization parameter
-    - keep_prob: probability that a node will be kept for dropout
+    nx: number of input features
+    layers: list with number of nodes in each layer
+    activations: list with activation functions used for each layer
+    lambtha: L2 regularization parameter
+    keep_prob: probability that a node will be kept for dropout
 
     Returns:
-    - keras Model
+    Keras Model
     """
     # Input layer
-    inputs = keras.Input(shape=(nx,))
+    inputs = K.Input(shape=(nx,))
     x = inputs
 
-    # Build hidden layers
+    # Hidden layers
     for i in range(len(layers)):
         # Dense layer with L2 regularization
-        x = keras.layers.Dense(
+        x = K.layers.Dense(
             units=layers[i],
             activation=activations[i],
-            kernel_regularizer=keras.regularizers.l2(lambtha)
+            kernel_regularizer=K.regularizers.l2(lambtha)
         )(x)
 
-        # Apply dropout only if not the last layer
+        # Dropout (not applied on last layer)
         if i < len(layers) - 1:
-            x = keras.layers.Dropout(rate=1 - keep_prob)(x)
+            x = K.layers.Dropout(rate=1 - keep_prob)(x)
 
     # Define the model
-    model = keras.Model(inputs=inputs, outputs=x)
-
+    model = K.Model(inputs=inputs, outputs=x)
     return model
