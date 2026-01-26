@@ -1,4 +1,8 @@
 #!/usr/bin/env python3
+"""
+Module that builds a neural network model using Keras functional API.
+"""
+
 import tensorflow.keras as K
 
 
@@ -9,11 +13,11 @@ def build_model(nx, layers, activations, lambtha, keep_prob):
     Parameters
     ----------
     nx : int
-        Number of input features to the network.
+        Number of input features.
     layers : list of int
-        List containing the number of nodes in each layer of the network.
+        Number of nodes in each layer.
     activations : list of str
-        List containing the activation functions used for each layer.
+        Activation functions for each layer.
     lambtha : float
         L2 regularization parameter.
     keep_prob : float
