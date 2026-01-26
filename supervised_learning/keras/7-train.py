@@ -74,4 +74,3 @@ def train_model(network, data, labels, batch_size, epochs,
         callbacks=callbacks
     )
     return history
- 
