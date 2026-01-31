@@ -1,58 +1,44 @@
 #!/usr/bin/env python3
 """
-Module that defines a deep neural network performing binary classification
+A script that implements a deep neural network for binary classification.
 """
+
 
 import numpy as np
 
 
 class DeepNeuralNetwork:
     """
-    Class that defines a deep neural network performing binary classification
+    A class that implements a deep neural network for binary classification.
     """
 
     def __init__(self, nx, layers):
         """
-        Constructor for DeepNeuralNetwork
-
-        Parameters
-        ----------
-        nx : int
-            Number of input features
-        layers : list
-            List representing the number of nodes in each layer of the network
-
-        Raises
-        ------
-        TypeError
-            If nx is not an integer
-            If layers is not a list of positive integers
-        ValueError
-            If nx is less than 1
+        A constructor that takes number of input as nx and
+        layers is a list representing the number of nodes
+        in each layer of the network
         """
-        if not isinstance(nx, int):
+        if type(nx) is not int:
             raise TypeError("nx must be an integer")
         if nx < 1:
             raise ValueError("nx must be a positive integer")
-        if not isinstance(layers, list) or len(layers) == 0:
-            raise TypeError("layers must be a list of positive integers")
-        for nodes in layers:
-            if not isinstance(nodes, int) or nodes < 1:
-                raise TypeError("layers must be a list of positive integers")
 
-        # Number of layers
+        if type(layers) is not list or len(layers) == 0:
+            raise TypeError("layers must be a list of positive integers")
+
         self.L = len(layers)
-        # Cache for forward propagation values
         self.cache = {}
-        # Dictionary for weights and biases
         self.weights = {}
 
-        # Initialize weights and biases using He et al. method
-        for l in range(self.L):
-            layer_key = str(l + 1)
-            nodes = layers[l]
-            prev_nodes = nx if l == 0 else layers[l - 1]
-            self.weights['W' + layer_key] = (
-                np.random.randn(nodes, prev_nodes) * np.sqrt(2 / prev_nodes)
+        prev = nx
+        for layer in range(1, self.L + 1):
+            nodes = layers[layer - 1]
+
+            if type(nodes) is not int or nodes <= 0:
+                raise TypeError("layers must be a list of positive integers")
+
+            self.weights["W{}".format(layer)] = (
+                np.random.randn(nodes, prev) * np.sqrt(2 / prev)
             )
-            self.weights['b' + layer_key] = np.zeros((nodes, 1))
+            self.weights["b{}".format(layer)] = np.zeros((nodes, 1))
+            prev = nodes
