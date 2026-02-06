@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+"""
+Module 0-norm_constants
+Provides a function to calculate normalization (standardization) constants
+for a dataset: the mean and standard deviation of each feature.
+"""
+
 import numpy as np
 
 
