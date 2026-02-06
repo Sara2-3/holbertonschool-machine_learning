@@ -1,35 +1,25 @@
 #!/usr/bin/env python3
 """
-Module 5-momentum
-Provides a function to update variables using gradient descent
-with momentum optimization.
+Module 6-momentum
+Provides a function to create a TensorFlow optimizer
+using gradient descent with momentum.
 """
 
-import numpy as np
+import tensorflow as tf
 
 
-def update_variables_momentum(alpha, beta1, var, grad, v):
+def create_momentum_op(alpha, beta1):
     """
-    Updates a variable using gradient descent with momentum.
+    Sets up the gradient descent with momentum optimization algorithm.
 
     Parameters:
     alpha : float
         learning rate
     beta1 : float
         momentum weight
-    var : numpy.ndarray
-        variable to be updated
-    grad : numpy.ndarray
-        gradient of var
-    v : numpy.ndarray
-        previous first moment of var
 
     Returns:
-    var_updated : numpy.ndarray
-        updated variable
-    v_new : numpy.ndarray
-        new momentum term
+    optimizer : tf.keras.optimizers.Optimizer
+        TensorFlow SGD optimizer with momentum
     """
-    v_new = beta1 * v + (1 - beta1) * grad
-    var_updated = var - alpha * v_new
-    return var_updated, v_new
+    return tf.keras.optimizers.SGD(learning_rate=alpha, momentum=beta1)
