@@ -1,35 +1,43 @@
 #!/usr/bin/env python3
 """
-Module 3-mini_batch
-Provides a function to create mini-batches for training a neural network
-using mini-batch gradient descent.
+Module 14-batch_norm
+Provides a function to create a batch normalization layer
+for a neural network in TensorFlow.
 """
 
-import numpy as np
-shuffle_data = __import__('2-shuffle_data').shuffle_data
+import tensorflow as tf
 
 
-def create_mini_batches(X, Y, batch_size):
+def create_batch_norm_layer(prev, n, activation):
     """
-    Creates mini-batches to be used for training.
+    Creates a batch normalization layer for a neural network.
 
     Parameters:
-    X : numpy.ndarray of shape (m, nx)
-    Y : numpy.ndarray of shape (m, ny)
-    batch_size : int
+    prev : tensor
+        activated output of the previous layer
+    n : int
+        number of nodes in the layer to be created
+    activation : function
+        activation function to be used on the output
 
     Returns:
-    list of tuples (X_batch, Y_batch)
+    tensor
+        activated output for the layer
     """
-    # Shuffle once per epoch
-    X, Y = shuffle_data(X, Y)
-    m = X.shape[0]
-    mini_batches = []
+    dense = tf.keras.layers.Dense(
+        units=n,
+        kernel_initializer=tf.keras.initializers.VarianceScaling(
+            mode='fan_avg'
+        ),
+        use_bias=False
+    )(prev)
 
-    # Slice into batches
-    for i in range(0, m, batch_size):
-        X_batch = X[i:i + batch_size]
-        Y_batch = Y[i:i + batch_size]
-        mini_batches.append((X_batch, Y_batch))
+    batch_norm = tf.keras.layers.BatchNormalization(
+        axis=-1,
+        momentum=0.99,
+        epsilon=1e-7,
+        gamma_initializer='ones',
+        beta_initializer='zeros'
+    )(dense)
 
-    return mini_batches
+    return activation(batch_norm)
