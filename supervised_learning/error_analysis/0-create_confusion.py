@@ -28,7 +28,7 @@ def create_confusion_matrix(labels, logits):
     pred_classes = np.argmax(logits, axis=1)
 
     classes = labels.shape[1]
-    confusion = np.zeros((classes, classes), dtype=np.int64)
+    confusion = np.zeros((classes, classes), dtype=np.float64)
 
     # Fill the confusion matrix
     for t, p in zip(true_classes, pred_classes):
