@@ -42,8 +42,8 @@ def conv_backward(dZ, A_prev, W, b, padding="same", stride=(1, 1)):
 
     # Padding
     if padding == "same":
-        ph = int(((h_new - 1) * sh + kh - h_prev) / 2)
-        pw = int(((w_new - 1) * sw + kw - w_prev) / 2)
+        ph = int(np.ceil(((h_prev - 1) * sh + kh - h_prev) / 2))
+        pw = int(np.ceil(((w_prev - 1) * sw + kw - w_prev) / 2))
     else:
         ph, pw = 0, 0
 
@@ -70,7 +70,7 @@ def conv_backward(dZ, A_prev, W, b, padding="same", stride=(1, 1)):
                     a_slice = a_prev_pad[vert_start:vert_end,
                                          horiz_start:horiz_end, :]
 
-                    # Kontrollo që slice ka formën e duhur
+                    # Vetëm nëse slice ka formën e plotë
                     if a_slice.shape == (kh, kw, c_prev):
                         da_prev_pad[vert_start:vert_end,
                                     horiz_start:horiz_end, :] += (
