@@ -9,6 +9,31 @@ import numpy as np
 def conv_backward(dZ, A_prev, W, b, padding="same", stride=(1, 1)):
     """
     Performs back propagation over a convolutional layer of a neural network.
+
+    Parameters
+    ----------
+    dZ : numpy.ndarray
+        Shape (m, h_new, w_new, c_new), partial derivatives with respect to
+        the unactivated output of the convolutional layer.
+    A_prev : numpy.ndarray
+        Shape (m, h_prev, w_prev, c_prev), output of the previous layer.
+    W : numpy.ndarray
+        Shape (kh, kw, c_prev, c_new), kernels for the convolution.
+    b : numpy.ndarray
+        Shape (1, 1, 1, c_new), biases applied to the convolution.
+    padding : str, optional
+        Either 'same' or 'valid', type of padding used. Default is 'same'.
+    stride : tuple, optional
+        (sh, sw), strides for the convolution. Default is (1, 1).
+
+    Returns
+    -------
+    dA_prev : numpy.ndarray
+        Partial derivatives with respect to the previous layer.
+    dW : numpy.ndarray
+        Partial derivatives with respect to the kernels.
+    db : numpy.ndarray
+        Partial derivatives with respect to the biases.
     """
     m, h_prev, w_prev, c_prev = A_prev.shape
     kh, kw, _, c_new = W.shape
@@ -17,8 +42,8 @@ def conv_backward(dZ, A_prev, W, b, padding="same", stride=(1, 1)):
 
     # Padding
     if padding == "same":
-        ph = ((h_prev - 1) * sh + kh - h_prev) // 2
-        pw = ((w_prev - 1) * sw + kw - w_prev) // 2
+        ph = int(((h_new - 1) * sh + kh - h_prev) / 2)
+        pw = int(((w_new - 1) * sw + kw - w_prev) / 2)
     else:
         ph, pw = 0, 0
 
@@ -45,14 +70,13 @@ def conv_backward(dZ, A_prev, W, b, padding="same", stride=(1, 1)):
                     a_slice = a_prev_pad[vert_start:vert_end,
                                          horiz_start:horiz_end, :]
 
-                    # Gradient wrt input
-                    da_prev_pad[vert_start:vert_end,
-                                horiz_start:horiz_end, :] += (
-                        W[:, :, :, c] * dZ[i, h, w, c]
-                    )
-
-                    # Gradient wrt weights
-                    dW[:, :, :, c] += a_slice * dZ[i, h, w, c]
+                    # Kontrollo që slice ka formën e duhur
+                    if a_slice.shape == (kh, kw, c_prev):
+                        da_prev_pad[vert_start:vert_end,
+                                    horiz_start:horiz_end, :] += (
+                            W[:, :, :, c] * dZ[i, h, w, c]
+                        )
+                        dW[:, :, :, c] += a_slice * dZ[i, h, w, c]
 
         dA_prev_pad[i] = da_prev_pad
 
