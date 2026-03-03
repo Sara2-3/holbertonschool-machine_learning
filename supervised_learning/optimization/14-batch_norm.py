@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
 """
-Module 14-batch_norm
-Provides a function to create a batch normalization layer
-for a neural network in TensorFlow.
+Module that creates a batch normalization layer for a neural network
 """
 
 import tensorflow as tf
@@ -10,34 +8,31 @@ import tensorflow as tf
 
 def create_batch_norm_layer(prev, n, activation):
     """
-    Creates a batch normalization layer for a neural network.
+    Creates a batch normalization layer for a neural network in tensorflow
 
     Parameters:
-    prev : tensor
-        activated output of the previous layer
-    n : int
-        number of nodes in the layer to be created
-    activation : function
-        activation function to be used on the output
+    - prev: activated output of the previous layer
+    - n: number of nodes in the layer to be created
+    - activation: activation function to be used
 
     Returns:
-    tensor
-        activated output for the layer
+    - tensor of the activated output for the layer
     """
-    dense = tf.keras.layers.Dense(
+    dense_layer = tf.keras.layers.Dense(
         units=n,
         kernel_initializer=tf.keras.initializers.VarianceScaling(
             mode='fan_avg'
-        ),
-        use_bias=False
-    )(prev)
+        )
+    )
+    dense = dense_layer(prev)
 
-    batch_norm = tf.keras.layers.BatchNormalization(
-        axis=-1,
-        momentum=0.99,
-        epsilon=1e-7,
-        gamma_initializer='ones',
-        beta_initializer='zeros'
-    )(dense)
+    mean, variance = tf.nn.moments(dense, axes=[0])
 
-    return activation(batch_norm)
+    gamma = tf.Variable(tf.ones([n]), trainable=True)
+    beta = tf.Variable(tf.zeros([n]), trainable=True)
+
+    epsilon = 1e-7
+    normalized = (dense - mean) / tf.sqrt(variance + epsilon)
+    bn = gamma * normalized + beta
+
+    return activation(bn)
