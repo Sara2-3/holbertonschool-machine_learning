@@ -12,7 +12,9 @@ def change_brightness(image, max_delta):
 
     Args:
         image (tf.Tensor): 3D tensor containing the image to change.
-        max_delta (float): Maximum amount the image should be brightened or darkened.
+        max_delta (float): Maximum amount the image should be
+    brightened or darkened.
+
 
     Returns:
         tf.Tensor: Brightness-adjusted image tensor.
