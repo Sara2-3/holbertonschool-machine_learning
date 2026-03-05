@@ -24,7 +24,8 @@ def early_stopping(cost, opt_cost, threshold, patience, count):
         # found a new optimal cost → reset counter
         return False, 0
 
-    if cost > opt_cost + threshold:
+    # if cost has not decreased enough compared to opt_cost
+    if cost - opt_cost <= threshold:
         count += 1
     else:
         count = 0
