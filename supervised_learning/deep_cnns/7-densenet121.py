@@ -26,7 +26,7 @@ def densenet121(growth_rate=32, compression=1.0):
 
     # Initial convolution and pooling
     bn0 = K.layers.BatchNormalization()(inputs)
-    relu0 = K.layers.Activation('relu')(bn0)
+    relu0 = K.layers.ReLU()(bn0)
     conv0 = K.layers.Conv2D(
         filters=64,
         kernel_size=(7, 7),
@@ -59,7 +59,7 @@ def densenet121(growth_rate=32, compression=1.0):
 
     # Classification layer
     bn_final = K.layers.BatchNormalization()(X)
-    relu_final = K.layers.Activation('relu')(bn_final)
+    relu_final = K.layers.ReLU()(bn_final)
     avg_pool = K.layers.GlobalAveragePooling2D()(relu_final)
     outputs = K.layers.Dense(
         units=1000,
