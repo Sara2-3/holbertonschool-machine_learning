@@ -24,9 +24,8 @@ def dense_block(X, nb_filters, growth_rate, layers):
     he_normal = K.initializers.he_normal(seed=0)
 
     for i in range(layers):
-        # Bottleneck layer: BN → ReLU → 1x1 Conv (4*growth_rate filters)
         bn1 = K.layers.BatchNormalization()(X)
-        relu1 = K.layers.Activation('relu')(bn1)
+        relu1 = K.layers.ReLU()(bn1)
         conv1 = K.layers.Conv2D(
             filters=4 * growth_rate,
             kernel_size=(1, 1),
@@ -34,9 +33,8 @@ def dense_block(X, nb_filters, growth_rate, layers):
             kernel_initializer=he_normal
         )(relu1)
 
-        # BN → ReLU → 3x3 Conv (growth_rate filters)
         bn2 = K.layers.BatchNormalization()(conv1)
-        relu2 = K.layers.Activation('relu')(bn2)
+        relu2 = K.layers.ReLU()(bn2)
         conv2 = K.layers.Conv2D(
             filters=growth_rate,
             kernel_size=(3, 3),
@@ -44,7 +42,6 @@ def dense_block(X, nb_filters, growth_rate, layers):
             kernel_initializer=he_normal
         )(relu2)
 
-        # Concatenate with input
         X = K.layers.Concatenate()([X, conv2])
         nb_filters += growth_rate
 
