@@ -49,11 +49,7 @@ def densenet121(growth_rate=32, compression=1.0):
 
     X, nb_filters = dense_block(X, nb_filters, growth_rate, 16)
 
-    X = K.layers.AveragePooling2D(
-        pool_size=(7, 7),
-        strides=(1, 1)
-    )(X)
-    X = K.layers.Flatten()(X)
+    X = K.layers.GlobalAveragePooling2D()(X)
     output = K.layers.Dense(
         1000,
         activation='softmax',
