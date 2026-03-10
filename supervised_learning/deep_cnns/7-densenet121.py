@@ -44,10 +44,10 @@ def densenet121(growth_rate=32, compression=1.0):
     X, nb_filters = dense_block(X, nb_filters, growth_rate, 12)
     X, nb_filters = transition_layer(X, nb_filters, compression)
 
-    X, nb_filters = dense_block(X, nb_filters, growth_rate, 24)
+    X, nb_filters = dense_block(X, nb_filters, growth_rate, 32)
     X, nb_filters = transition_layer(X, nb_filters, compression)
 
-    X, nb_filters = dense_block(X, nb_filters, growth_rate, 16)
+    X, nb_filters = dense_block(X, nb_filters, growth_rate, 32)
 
     X = K.layers.GlobalAveragePooling2D()(X)
     output = K.layers.Dense(
