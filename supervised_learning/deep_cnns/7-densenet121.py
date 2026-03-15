@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Task 7
+A script that builds the DenseNet-121 architecture
 """
 from tensorflow import keras as K
 dense_block = __import__('5-dense_block').dense_block
@@ -9,6 +9,7 @@ transition_layer = __import__('6-transition_layer').transition_layer
 
 def densenet121(growth_rate=32, compression=1.0):
     """
+    A function that builds the DenseNet-121 architecture
     """
     he_normal = K.initializers.he_normal(seed=0)
     inputs = K.Input(shape=(224, 224, 3))
