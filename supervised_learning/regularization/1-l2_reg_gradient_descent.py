@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Gradient Descent with L2 Regularization
+    Gradient Descent with L2 regularization
 """
 
 import numpy as np
@@ -8,30 +8,37 @@ import numpy as np
 
 def l2_reg_gradient_descent(Y, weights, cache, alpha, lambtha, L):
     """
-    Updates the weights and biases of a neural network using
-    gradient descent with L2 regularization.
+        function that updates the weights and biases of NN
+        using gradient descent with L2 regularization
 
-    Parameters:
-    - Y: one-hot numpy.ndarray of shape (classes, m)
-    - weights: dict of weights and biases of the neural network
-    - cache: dict of outputs of each layer of the neural network
-    - alpha: learning rate
-    - lambtha: L2 regularization parameter
-    - L: number of layers of the network
+        Formula:
+        W = W - alpha * (dW + (lambtha/m) * W)
     """
+    # store m number training examples
     m = Y.shape[1]
-    dZ = cache[f"A{L}"] - Y
 
-    for i in range(L, 0, -1):
-        A_prev = cache[f"A{i-1}"]
-        W = weights[f"W{i}"]
+    # derivative of final layer
+    # starting point for backpropagation
+    dZ = cache['A' + str(L)] - Y
 
-        dW = (np.matmul(dZ, A_prev.T) / m) + (lambtha / m) * W
+    # backpropagation loop
+    for layer in range(L, 0, -1):
+        L2_regularization = lambtha / m * weights['W' + str(layer)]
+
+        # activation of previous layer
+        A_prev = cache['A' + str(layer - 1)]
+
+        # Gradient of Weight and biases
+        dW = np.matmul(dZ, A_prev.T) / m + L2_regularization
         db = np.sum(dZ, axis=1, keepdims=True) / m
+        dA = np.matmul(weights['W' + str(layer)].T, dZ)
 
-        weights[f"W{i}"] -= alpha * dW
-        weights[f"b{i}"] -= alpha * db
+        # derivative of tanh activation
+        if layer != 1:
+            dZ = dA * (1 - A_prev ** 2)
+        else:  # Apply softmax derivative for the last layer
+            dZ = dA
 
-        if i > 1:
-            dA_prev = np.matmul(W.T, dZ)
-            dZ = dA_prev * (1 - cache[f"A{i-1}"] ** 2)
+        # update weights
+        weights['W' + str(layer)] -= alpha * dW
+        weights['b' + str(layer)] -= alpha * db
