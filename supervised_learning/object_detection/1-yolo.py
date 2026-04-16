@@ -55,8 +55,9 @@ class Yolo:
         box_class_probs = []
 
         image_height, image_width = image_size
-        input_height = self.model.input_shape[1]
-        input_width = self.model.input_shape[2]
+        # Darknet convention: input_shape[1]=width, input_shape[2]=height
+        input_w = self.model.input_shape[1]
+        input_h = self.model.input_shape[2]
 
         for i, output in enumerate(outputs):
             grid_height, grid_width, anchor_boxes, _ = output.shape
@@ -76,8 +77,8 @@ class Yolo:
             anchors_wh = self.anchors[i].reshape(1, 1, anchor_boxes, 2)
 
             b_wh = np.exp(t_wh) * anchors_wh
-            b_wh[:, :, :, 0] /= input_width
-            b_wh[:, :, :, 1] /= input_height
+            b_wh[:, :, :, 0] /= input_w
+            b_wh[:, :, :, 1] /= input_h
 
             # --- Convert (bx, by, bw, bh) to (x1, y1, x2, y2) ---
             x1 = (b_xy[:, :, :, 0] - b_wh[:, :, :, 0] / 2) * image_width
