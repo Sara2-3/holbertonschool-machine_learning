@@ -55,7 +55,6 @@ class Yolo:
         box_class_probs = []
 
         image_height, image_width = image_size
-        # Get model's expected input dimensions
         input_height = self.model.input_shape[1]
         input_width = self.model.input_shape[2]
 
@@ -64,10 +63,8 @@ class Yolo:
 
             # --- Decode box center (tx, ty) using sigmoid + grid offset ---
             t_xy = output[:, :, :, :2]
-            b_xy = 1 / (1 + np.exp(-t_xy))  # sigmoid
+            b_xy = 1 / (1 + np.exp(-t_xy))
 
-            # Build grid offsets: cx for x-axis, cy for y-axis
-            # cx shape: (1, grid_width, 1), cy shape: (grid_height, 1, 1)
             cx = np.arange(grid_width).reshape(1, grid_width, 1)
             cy = np.arange(grid_height).reshape(grid_height, 1, 1)
 
@@ -76,15 +73,13 @@ class Yolo:
 
             # --- Decode box dimensions (tw, th) using exp + anchor size ---
             t_wh = output[:, :, :, 2:4]
-            # self.anchors[i] has shape (anchor_boxes, 2)
             anchors_wh = self.anchors[i].reshape(1, 1, anchor_boxes, 2)
 
             b_wh = np.exp(t_wh) * anchors_wh
             b_wh[:, :, :, 0] /= input_width
             b_wh[:, :, :, 1] /= input_height
 
-            # --- Convert (bx, by, bw, bh) → (x1, y1, x2, y2) ---
-            # Scale to original image dimensions
+            # --- Convert (bx, by, bw, bh) to (x1, y1, x2, y2) ---
             x1 = (b_xy[:, :, :, 0] - b_wh[:, :, :, 0] / 2) * image_width
             y1 = (b_xy[:, :, :, 1] - b_wh[:, :, :, 1] / 2) * image_height
             x2 = (b_xy[:, :, :, 0] + b_wh[:, :, :, 0] / 2) * image_width
@@ -102,4 +97,3 @@ class Yolo:
             box_class_probs.append(box_cls_prob)
 
         return boxes, box_confidences, box_class_probs
-    
