@@ -15,7 +15,7 @@ class RNNCell:
             h: dimensionality of the hidden state
             o: dimensionality of the outputs
         """
-        self.Wh = np.random.randn(i + h, h)
+        self.Wh = np.random.randn(h + i, h)
         self.Wy = np.random.randn(h, o)
         self.bh = np.zeros((1, h))
         self.by = np.zeros((1, o))
@@ -32,7 +32,7 @@ class RNNCell:
             h_next: next hidden state
             y: output of the cell (softmax activated)
         """
-        concat = np.concatenate((x_t, h_prev), axis=1)
+        concat = np.concatenate((h_prev, x_t), axis=1)
         h_next = np.tanh(concat @ self.Wh + self.bh)
 
         logits = h_next @ self.Wy + self.by
