@@ -17,10 +17,10 @@ def deep_rnn(rnn_cells, X, h_0):
         Y: numpy.ndarray of shape (t, m, o) — all outputs
     """
     t, m, _ = X.shape
-    l = len(rnn_cells)
+    num_layers = len(rnn_cells)
     _, _, h = h_0.shape
 
-    H = np.zeros((t + 1, l, m, h))
+    H = np.zeros((t + 1, num_layers, m, h))
     H[0] = h_0
 
     Y_list = []
