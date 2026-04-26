@@ -17,17 +17,15 @@ def bag_of_words(sentences, vocab=None):
         embeddings: numpy.ndarray of shape (s, f)
         features: list of features used for embeddings
     """
-    # Tokenize: lowercase, remove punctuation, split into words
     tokenized = []
     for sentence in sentences:
-        # lowercase, remove possessives, then remove non-alpha characters
         clean = sentence.lower()
-        clean = re.sub(r"'s\b", "", clean)   # remove possessives e.g. children's
+        # remove possessives e.g. children's
+        clean = re.sub(r"'s\b", "", clean)
         clean = re.sub(r"[^a-zA-Z ]", " ", clean)
         words = clean.split()
         tokenized.append(words)
 
-    # Build vocabulary if not provided
     if vocab is None:
         all_words = set()
         for words in tokenized:
@@ -36,12 +34,10 @@ def bag_of_words(sentences, vocab=None):
     else:
         features = list(vocab)
 
-    # Build embedding matrix
     s = len(sentences)
     f = len(features)
     embeddings = np.zeros((s, f), dtype=int)
 
-    # Map feature to index for fast lookup
     feature_index = {word: i for i, word in enumerate(features)}
 
     for i, words in enumerate(tokenized):
