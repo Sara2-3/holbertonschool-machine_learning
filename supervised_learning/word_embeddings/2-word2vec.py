@@ -1,7 +1,10 @@
 #!/usr/bin/env python3
 """Train a Word2Vec model using gensim"""
 
-import gensim
+import os
+os.environ['PYTHONHASHSEED'] = str(0)
+
+import gensim  # noqa: E402
 
 
 def word2vec_model(sentences, vector_size=100, min_count=5, window=5,
